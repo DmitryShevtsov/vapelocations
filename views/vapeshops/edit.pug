@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+    form(method = 'POST' action='/vapeshop/' + vapeshop.id + '?_method=PUT')
+        //input(type = 'hidden' name = '_method' value = 'patch')
+        div
+            input#name(type = 'text' placeholder = 'vapeshop name' name = 'name' value = vapeshop.name)
+        div
+            input#description(type = 'text' placeholder = 'vapeshop description' name = 'description' value = vapeshop.description)
+        div
+            button(type = 'submit') Update vapeshop

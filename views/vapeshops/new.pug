@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    form(method = 'POST' action='/vapeshops')
+        div
+            input#name(type = 'text' placeholder = 'vapeshop name' name = 'name')
+        div
+            input#description(type = 'text' placeholder = 'vapeshop description' name = 'description')
+        div
+            button(type = 'submit') Add vapeshop

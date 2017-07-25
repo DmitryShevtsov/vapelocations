@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    a(href="/vapeshops/new") Add vapeshop
+    ul
+        each vapeshop in vapeshops
+            li
+                h1
+                    a(href="/vapeshop/" + vapeshop.id)=vapeshop.name
+                p= vapeshop.description

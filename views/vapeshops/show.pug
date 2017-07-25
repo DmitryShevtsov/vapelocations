@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+    h1= vapeshop.name
+    p= vapeshop.description
+
+    form(method = 'POST' action = '/vapeshop/' + vapeshop.id + '?_method=DELETE')
+        button(type = 'submit') Delete
+    a(href="/vapeshop/" + vapeshop.id + '/edit') Edit vapeshop

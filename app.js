@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routesList = require('./routes');
-
+var expressMethodOverride = require('method-override');
 var app = express();
 
 // view engine setup
@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressMethodOverride('_method'));
 
 routesList.forEach((route) => {
   app.use(route);

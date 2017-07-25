@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  h1 Vape shops list
+  ul
+    each vapeShop in vapeShops
+      li
+        h1= vapeShop.name
+        p= vapeShop.description
+
