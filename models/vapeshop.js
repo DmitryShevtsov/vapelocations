@@ -4,11 +4,11 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     description: DataTypes.STRING
   }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
+
   });
+    VapeShop.associate = (models) => {
+        VapeShop.hasOne(models.Location, { foreignKey: 'vapeshop_id',onDelete: 'CASCADE', hooks: true });
+
+  };
   return VapeShop;
 };
