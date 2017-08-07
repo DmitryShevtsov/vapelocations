@@ -1,6 +1,8 @@
 extends ../layout
 
+
 block content
+    h1= currentUser ? currentUser.username : 'Hello'
     a(href="/vapeshops/new") Add vapeshop
     ul
         each vapeshop in vapeshops
@@ -9,3 +11,6 @@ block content
                     a(href="/vapeshop/" + vapeshop.id)=vapeshop.name
                 p= vapeshop.description
                 p= vapeshop.address
+    include ../logIn/logIn
+    form(method = 'POST' action = '/logout/?_method=DELETE')
+        button(type = 'submit') FUCK OUT

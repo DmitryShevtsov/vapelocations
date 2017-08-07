@@ -3,10 +3,15 @@ var router = express.Router();
 var models = require('../models');
 var VapeShops = models.VapeShop;
 var Location = models.Location;
+var mustAuth = require('../middlewares/mustAuth');
+var User = models.User;
+var Comment = models.Comment;
 
 router.get('/vapeshops',(req, res) => {
+    console.log("Current user");
+    console.log(req.user);
     VapeShops.findAll().then(vapeshops => {
-        res.render('vapeshops/index', {vapeshops: vapeshops});
+        res.render('vapeshops/index', {vapeshops: vapeshops, currentUser: req.user});
     });
 });
 
@@ -18,20 +23,33 @@ router.get('/vapeshop/:id', (req, res) => {
         },
         include: [{
             model: Location
-        }]
+
+        },
+            {
+                model: User
+            },
+            {
+                model: Comment,
+                include: [User]
+            }]
+
     }).then(vapeshop => {
-        res.render('vapeshops/show', {vapeshop: vapeshop});
+        res.render('vapeshops/show', {vapeshop: vapeshop, currentUser: req.user });
     });
 });
 
+router.all('/vapeshops/new', mustAuth);
+
 router.get('/vapeshops/new', (req, res) => {
+    console.log(req.user);
     res.render('vapeshops/new');
 });
 
 router.post('/vapeshops', (req, res) => {
     VapeShops.create({
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        user_id: req.user.id
     }).then((vapeshop) =>{
         Location.create({address: req.body.address, vapeshop_id: vapeshop.id, lat: req.body.lat, lng: req.body.lng}).then((location) => {
             res.redirect('vapeshop/' + location.vapeshop_id);

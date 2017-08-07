@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var routesList = require('./routes');
 var expressMethodOverride = require('method-override');
 var app = express();
+var passport = require('passport');
+var session = require('express-session');
+var User = require('./models').User;
+var passportLocalSequelize = require('passport-local-sequelize');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,6 +24,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressMethodOverride('_method'));
+var session = require('express-session');
+app.set('trust proxy', 1);
+app.use(require('express-session')({
+    secret: 'fsd-fsd-fsd',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 routesList.forEach((route) => {
   app.use(route);

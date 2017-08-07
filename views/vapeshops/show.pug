@@ -1,14 +1,25 @@
 extends ../layout
 
 block content
+    h1= currentUser ? currentUser.username : 'Hello'
     h1= vapeshop.name
+    p= vapeshop.User.name
     p= vapeshop.description
-        p= vapeshop.Location.address
-        p= vapeshop.Location.lat
-        p= vapeshop.Location.lng
+    p= vapeshop.Location.address
+    p= vapeshop.Location.lat
+    p= vapeshop.Location.lng
 
     form(method = 'POST' action = '/vapeshop/' + vapeshop.id + '?_method=DELETE')
         button(type = 'submit') Delete
     a(href="/vapeshop/" + vapeshop.id + '/edit') Edit vapeshop
     br
     a(href="/vapeshops/") All vapeshops
+
+    ul
+        each comment in vapeshop.Comments
+            li
+                h4= comment.User.name
+                p= comment.text
+
+    if currentUser
+        include ../comments/form
