@@ -20,6 +20,9 @@ block content
             li
                 h4= comment.User.name
                 p= comment.text
+                    if currentUser
+                     if comment.user_id === currentUser.id
+                        include ../comments/remove
 
     if currentUser
         include ../comments/form

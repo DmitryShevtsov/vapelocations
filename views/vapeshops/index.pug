@@ -11,6 +11,10 @@ block content
                     a(href="/vapeshop/" + vapeshop.id)=vapeshop.name
                 p= vapeshop.description
                 p= vapeshop.address
-    include ../logIn/logIn
-    form(method = 'POST' action = '/logout/?_method=DELETE')
-        button(type = 'submit') FUCK OUT
+    div(align='right')
+        if !currentUser
+            include ../logIn/logIn
+        else
+            h3= 'Hello ' +currentUser.name
+            form(method = 'POST' action = '/logout/?_method=DELETE')
+                button(type = 'submit') Logout

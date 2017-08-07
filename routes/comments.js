@@ -14,4 +14,13 @@ router.post('/vapeshop/:id/comments', (req, res) => {
     });
 });
 
+router.delete('/vapeshop/:vapeshop_id/comments/:id', (req, res) => {
+    Comment.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(() => {
+        res.redirect('/vapeshop/' + req.params.vapeshop_id);
+    });
+});
 module.exports = router;
