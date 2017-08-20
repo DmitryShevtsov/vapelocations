@@ -3,7 +3,8 @@ extends ../layout
 
 block content
     h1= currentUser ? currentUser.username : 'Hello'
-    a(href="/vapeshops/new") Add vapeshop
+    if currentUser
+        a(href="/vapeshops/new") Add vapeshop
     ul
         each vapeshop in vapeshops
             li
@@ -11,6 +12,8 @@ block content
                     a(href="/vapeshop/" + vapeshop.id)=vapeshop.name
                 p= vapeshop.description
                 p= vapeshop.address
+
+
     div(align='right')
         if !currentUser
             include ../logIn/logIn

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Comment = require('../models').Comment;
+var User = require('../models').User;
 
 /* GET home page. */
 router.post('/vapeshop/:id/comments', (req, res) => {
@@ -9,8 +10,13 @@ router.post('/vapeshop/:id/comments', (req, res) => {
         user_id: req.user.id,
         vapeshop_id: req.params.id,
         text: req.body.text
-    }).then((comment) => {
-        res.redirect('/vapeshop/' + req.params.id);
+    },
+    { include: [User] }).then((comment) => {
+        res.status(201);
+        res.json({
+            comment: comment,
+            user: req.user
+        });
     });
 });
 
@@ -19,8 +25,11 @@ router.delete('/vapeshop/:vapeshop_id/comments/:id', (req, res) => {
         where: {
             id: req.params.id
         }
-    }).then(() => {
-        res.redirect('/vapeshop/' + req.params.vapeshop_id);
+    }).then((obj) => {
+        res.status(202);
+        res.json({
+            id: obj.id
+        });
     });
 });
 module.exports = router;

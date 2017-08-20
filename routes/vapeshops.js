@@ -70,7 +70,6 @@ router.get('/vapeshop/:id/edit', (req, res) => {
 });
 
 router.put('/vapeshop/:id', (req, res) => {
-    console.log("htllo");
     VapeShops.find({
         where: {
             id: req.params.id
@@ -79,7 +78,6 @@ router.put('/vapeshop/:id', (req, res) => {
     }).then((vapeshop) => {
         vapeshop.updateAttributes({name: req.body.name, description: req.body.description}).then(vapeshop => {
             var location = vapeshop.Location;
-            console.log("==ADDRESS= " + req.body.lat);
             location.updateAttributes({ address: req.body.address, lat: req.body.lat, lng: req.body.lng}).then(location => {
                 res.redirect('/vapeshop/' + location.vapeshop_id);
             });

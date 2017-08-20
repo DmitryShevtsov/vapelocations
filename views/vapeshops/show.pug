@@ -1,8 +1,14 @@
 extends ../layout
 
 block content
-    h1= currentUser ? currentUser.username : 'Hello'
-    h1= vapeshop.name
+    div(align='right')
+        if !currentUser
+            include ../logIn/logIn
+        else
+            h3= 'Hello, ' + currentUser.name + '!'
+            form(method = 'POST' action = '/logout/?_method=DELETE')
+                button(type = 'submit') Logout
+    h1(data-vapeshop_id = vapeshop.id)= vapeshop.name
     p= vapeshop.User.name
     p= vapeshop.description
     p= vapeshop.Location.address
@@ -11,13 +17,16 @@ block content
 
     form(method = 'POST' action = '/vapeshop/' + vapeshop.id + '?_method=DELETE')
         button(type = 'submit') Delete
-    a(href="/vapeshop/" + vapeshop.id + '/edit') Edit vapeshop
+    if currentUser
+        if vapeshop.user_id === currentUser.id
+            a(href="/vapeshop/" + vapeshop.id + '/edit') Edit vapeshop
     br
     a(href="/vapeshops/") All vapeshops
+    script(src='/js/comments.js')
 
-    ul
+    ul#comments
         each comment in vapeshop.Comments
-            li
+            li(id=comment.id)
                 h4= comment.User.name
                 p= comment.text
                     if currentUser
