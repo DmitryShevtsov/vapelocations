@@ -29,16 +29,19 @@ $(document).ready(function () {
                     $('#comments').prepend('<li id=' + response.comment.id + '> <h4>' + response.user.name + '</h4> <p>' + response.comment.text + '<a href="javascript:void(0)" data-comment-id=' + response.comment.id + '> X </a></p></li>');
                     $('#comment-text').val('');
 
-                    var vapeshop = $('[data-vapeshop_id]')[0];
-                    var vapeshopId = $(vapeshop).data('vapeshop_id');
-                    var id = $(this).data('comment-id');
+                    var comments = $('[data-comment-id]');
+                    comments.on('click', function (event) {
+                        var vapeshop = $('[data-vapeshop_id]')[0];
+                        var vapeshopId = $(vapeshop).data('vapeshop_id');
+                        var id = $(this).data('comment-id');
 
-                    $.ajax({
-                        url: '/vapeshop/' + vapeshopId + '/comments/' + id,
-                        type: 'DELETE',
-                        success: function () {
-                            $('#' + id).remove();
-                        }
+                        $.ajax({
+                            url: '/vapeshop/' + vapeshopId + '/comments/' + id,
+                            type: 'DELETE',
+                            success: function() {
+                                $('#'+id).remove();
+                            }
+                        });
                     });
                 }
             });
@@ -47,17 +50,8 @@ $(document).ready(function () {
             alert("Комментарий пуст:(");
         }
 
-    });
-    var vapeshop = $('[data-vapeshop_id]')[0];
-    var vapeshopId = $(vapeshop).data('vapeshop_id');
-    var id = $(this).data('comment-id');
 
-    $.ajax({
-        url: '/vapeshop/' + vapeshopId + '/comments/' + id,
-        type: 'DELETE',
-        success: function() {
-            $('#'+id).remove();
-        }
+
     });
 
 });
