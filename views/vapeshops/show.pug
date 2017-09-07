@@ -1,37 +1,31 @@
 extends ../layout
 
 block content
-    div(align='right')
-        if !currentUser
-            include ../logIn/logIn
-        else
-            h3= 'Hello, ' + currentUser.name + '!'
-            form(method = 'POST' action = '/logout/?_method=DELETE')
-                button(type = 'submit') Logout
-    h1(data-vapeshop_id = vapeshop.id)= vapeshop.name
-    p= vapeshop.User.name
-    p= vapeshop.description
-    p= vapeshop.Location.address
-    p= vapeshop.Location.lat
-    p= vapeshop.Location.lng
+    div.col-xs-12.col-md-4.col-lg-4
+        h1(id="vapeshop-data" data-vapeshop_id = vapeshop.id data-vapeshop-latitude=vapeshop.Location.lat data-vapeshop-longitude=vapeshop.Location.lng)= vapeshop.name
+        p= vapeshop.User.name
+        p= vapeshop.description
+        p= vapeshop.Location.address
 
-    form(method = 'POST' action = '/vapeshop/' + vapeshop.id + '?_method=DELETE')
-        button(type = 'submit') Delete
-    if currentUser
-        if vapeshop.user_id === currentUser.id
-            a(href="/vapeshop/" + vapeshop.id + '/edit') Edit vapeshop
-    br
-    a(href="/vapeshops/") All vapeshops
-    script(src='/js/comments.js')
+        form(method = 'POST' action = '/vapeshop/' + vapeshop.id + '?_method=DELETE')
+            button(type = 'submit') Delete
+        if currentUser
+            if vapeshop.user_id === currentUser.id
+                a(href="/vapeshop/" + vapeshop.id + '/edit') Edit vapeshop
+        br
+        a(href="/vapeshops/") All vapeshops
+        script(src='/js/comments.js')
 
-    ul#comments
-        each comment in vapeshop.Comments
-            li(id=comment.id)
-                h4= comment.User.name
-                p= comment.text
-                    if currentUser
-                     if comment.user_id === currentUser.id
-                        include ../comments/remove
+        ul#comments
+            each comment in vapeshop.Comments
+                li(id=comment.id)
+                    h4= comment.User.name
+                    p= comment.text
+                        if currentUser
+                         if comment.user_id === currentUser.id
+                            include ../comments/remove
 
-    if currentUser
-        include ../comments/form
+        if currentUser
+            include ../comments/form
+    div.col-xs-12.col-md-8.col-lg-8
+        include ../shared/showMap

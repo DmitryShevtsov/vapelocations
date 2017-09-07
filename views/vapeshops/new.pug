@@ -1,16 +1,23 @@
 extends ../layout
 
+
+
 block content
-    form(method = 'POST' action='/vapeshops')
-        div
-            input#name(type = 'text' placeholder = 'vapeshop name' name = 'name')
-        div
-            input#description(type = 'text' placeholder = 'vapeshop description' name = 'description')
-        div
-            input#addres(type = 'text' placeholder = 'address of vapeshop' name = 'address')
-        div
-            input#lng(type = 'text' placeholder = 'lng of your vapeshop' name = 'lng')
-        div
-            input#lat(type = 'text' placeholder = 'lat of your vapeshop' name = 'lat')
-        div
-            button(type = 'submit') Add vapeshop
+
+
+
+    div.col-xs-12.col-md-4.col-lg-4
+        form#addVapeForm(method = 'POST' action='/vapeshops' align='center' margin='200pt')
+            input#shop-latitude(type = 'text' name = 'lat' hidden='')
+            input#shop-longitude(type = 'text' name = 'lng' hidden='')
+            div
+                input#name(type = 'text' placeholder = 'vapeshop name' name = 'name')
+            div
+                input#description(type = 'text' placeholder = 'vapeshop description' name = 'description')
+            div
+                input#addres(type = 'text' placeholder = 'address of vapeshop' name = 'address')
+
+            div
+                input#AddVapeShopButton(type = 'submit' value='Add vapeshop')
+    div.col-xs-12.col-md-8.col-lg-8
+        include ../shared/newVapeShopMap

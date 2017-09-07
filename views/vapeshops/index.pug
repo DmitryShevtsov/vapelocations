@@ -2,22 +2,17 @@ extends ../layout
 
 
 block content
-    h1= currentUser ? currentUser.username : 'Hello'
-    if currentUser
-        a(href="/vapeshops/new") Add vapeshop
-    ul
-        each vapeshop in vapeshops
-            li
-                h1
-                    a(href="/vapeshop/" + vapeshop.id)=vapeshop.name
-                p= vapeshop.description
-                p= vapeshop.address
 
-
-    div(align='right')
-        if !currentUser
-            include ../logIn/logIn
-        else
-            h3= 'Hello ' +currentUser.name
-            form(method = 'POST' action = '/logout/?_method=DELETE')
-                button(type = 'submit') Logout
+        div.col-xs-12.col-md-8.col-lg-8
+            if currentUser
+                a(href="/vapeshops/new" class="pull-right") Add vapeshop
+            div.col-xs-12.col-md-12.col-lg-12#vapeshops-list
+                each  vapeshop in vapeshops
+                    div(class="col-xs-12 col-md-4 col-lg-4"
+                        data-location-lat=vapeshop.Location.lat
+                        data-location-lng=vapeshop.Location.lng)
+                        h1
+                            a(href="/vapeshop/"+vapeshop.id size='7')= vapeshop.name
+                        p= vapeshop.description
+        div.col-xs-12.col-md-4.col-lg-4
+            include ../shared/map

@@ -5,6 +5,7 @@ var User = require('../models').User;
 
 /* GET home page. */
 router.post('/vapeshop/:id/comments', (req, res) => {
+    console.log(req.body.text);
     Comment.create({
         user_id: req.user.id,
         vapeshop_id: req.params.id,

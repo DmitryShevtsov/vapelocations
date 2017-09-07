@@ -13,14 +13,17 @@ $(document).ready(function () {
             }
         });
     });
-//СПРОСИТЬ ПРО 18 и 19 строчку
-    $( "#add-comment" ).click(function() {
+
+    $( "#commentForm" ).submit(function(event) {
+        event.preventDefault();
         var vapeshop = $('[data-vapeshop_id]')[0];
         var vapeshopId = $(vapeshop).data('vapeshop_id');
         var obj = {
           text: $('#comment-text').val()
         };
-        if ($('#comment-text').val()) {
+
+        if ($.trim($('#comment-text').val()).length > 0) {
+
             $.ajax({
                 type: 'POST',
                 url: '/vapeshop/' + vapeshopId + '/comments',
@@ -49,8 +52,6 @@ $(document).ready(function () {
         else {
             alert("Комментарий пуст:(");
         }
-
-
 
     });
 

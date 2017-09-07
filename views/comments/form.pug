@@ -1,4 +1,5 @@
 form#commentForm(method = 'POST' action='/vapeshop/' + vapeshop.id + "/comments")
     div
         input#comment-text(type = 'area' placeholder = 'your comment' name = 'text')
-    div#add-comment Add comment
+    div
+        input(type='submit' value="Add comment")

@@ -10,14 +10,12 @@ var app = express();
 var passport = require('passport');
 var session = require('express-session');
 var User = require('./models').User;
-var passportLocalSequelize = require('passport-local-sequelize');
+var currentUser = require('./middlewares/current_user');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,7 +35,7 @@ passport.use(User.createStrategy());
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
+app.use(currentUser);
 routesList.forEach((route) => {
   app.use(route);
 });

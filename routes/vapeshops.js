@@ -6,11 +6,10 @@ var Location = models.Location;
 var mustAuth = require('../middlewares/mustAuth');
 var User = models.User;
 var Comment = models.Comment;
+var Location = models.Location;
 
 router.get('/vapeshops',(req, res) => {
-    console.log("Current user");
-    console.log(req.user);
-    VapeShops.findAll().then(vapeshops => {
+    VapeShops.findAll({ include: [Location] }).then(vapeshops => {
         res.render('vapeshops/index', {vapeshops: vapeshops, currentUser: req.user});
     });
 });
@@ -34,7 +33,7 @@ router.get('/vapeshop/:id', (req, res) => {
             }]
 
     }).then(vapeshop => {
-        res.render('vapeshops/show', {vapeshop: vapeshop, currentUser: req.user });
+        res.render('vapeshops/show', {vapeshop: vapeshop });
     });
 });
 

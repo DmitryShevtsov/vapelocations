@@ -4,9 +4,12 @@ var User = require('../models').User;
 var passport = require('passport');
 var url = require('url');
 
-/* GET users listing. */
-router.get('/users', function(req, res, next) {
-    res.json(req.session);
+router.get('/login', (req, res) => {
+    if(!req.user) {
+        res.render('logIn/logIn');
+    } else {
+        res.redirect('/');
+    }
 });
 
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }),
@@ -15,7 +18,7 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
     }
 );
 
-router.delete('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     req.logOut();
     res.redirect('/');
 });

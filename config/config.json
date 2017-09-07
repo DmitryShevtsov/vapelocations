@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "vapelocations_development",
+    "database": "vape_loc_dev",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
